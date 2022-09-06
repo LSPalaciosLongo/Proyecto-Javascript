@@ -1,3 +1,6 @@
+localStorage.setItem("token","1234")
+sessionStorage.setItem("token","12345")
+
 const arrayNombres = [];
 const arrayNotas = [];
 const arrayUnido =[];
