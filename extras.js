@@ -1,3 +1,4 @@
+/*
 var maria; //declarar
 let juan; //declarar
 juan = 22; //asignar
@@ -16,9 +17,6 @@ if ((nombreUsuario == "") && (apellidoUsuario == "")){
     alert("No ingresaste nombre ni apellido");
 
 }
-
-
-
 
 let result = num1 - num2;
 console.log(x);
@@ -106,4 +104,36 @@ function solicitarNombre(indice, parametro2, parametro3) {
 for (let index = 0; index < 5; index++){
     console.log("Ejecuto función en la iteración ", index);
         solicitarNombre();
+}
+*/
+
+// JAVASCRIPT CON LO REALIZADO EN ENTREGAS ANTERIORES O ANOTACIONES DE CLASES
+
+// localStorage.setItem("token","1234")
+// sessionStorage.setItem("token","12345")
+
+const arrayNombres = [];
+const arrayNotas = [];
+const arrayUnido =[];
+
+function agregarAlumno(){
+    // var table = document.getElementById("datas");
+    // table.innerHTML="";
+    // var tr="";
+    var name = document.getElementById("n1").value;
+    var note = document.getElementById("n2").value;
+    arrayNombres.push(name);
+    arrayNotas.push(note);
+    // arrayUnido.push(name, note);
+    /* arrayUnido.push(arrayNombres, arrayNotas);
+    arrayUnido.forEach(x=>{
+        tr+='<tr>';
+        tr+='<td>'+name+'</td>' + '<td>'+note+'</td>'
+        tr+='</tr>'
+   
+     })
+    table.innerHTML+=tr;*/
+
+    document.getElementById("nombre").innerHTML = arrayNombres
+    document.getElementById("nota").innerHTML = arrayNotas
 }

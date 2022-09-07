@@ -1,28 +1,24 @@
-localStorage.setItem("token","1234")
-sessionStorage.setItem("token","12345")
-
 const arrayNombres = [];
 const arrayNotas = [];
-const arrayUnido =[];
 
-function agregarAlumno(){
-    // var table = document.getElementById("datas");
-    // table.innerHTML="";
-    // var tr="";
-    var name = document.getElementById("n1").value;
-    var note = document.getElementById("n2").value;
-    arrayNombres.push(name);
-    arrayNotas.push(note);
-    // arrayUnido.push(name, note);
-    /* arrayUnido.push(arrayNombres, arrayNotas);
-    arrayUnido.forEach(x=>{
-        tr+='<tr>';
-        tr+='<td>'+name+'</td>' + '<td>'+note+'</td>'
-        tr+='</tr>'
-   
-     })
-    table.innerHTML+=tr;*/
-
-    document.getElementById("nombre").innerHTML = arrayNombres
-    document.getElementById("nota").innerHTML = arrayNotas
+var title = document.getElementById('title');
+var list = document.getElementById('list');
+var li = list.getElementsByTagName('li');
+var addBtn = document.getElementById('add-Btn');
+for (var i = 0; i < li.length; i++) {
+  list.addEventListener('click', activeItem);
 }
+function activeItem() {
+  title.innerHTML = this.innerText;
+  for (var i = 0; i < li.length; i++) {
+    li[i].removeAttribute('class');
+  }
+  this.setAttribute('class', 'active');
+}
+addBtn.addEventListener('click', function() {
+  var name = prompt('Ingrese nombre de alumno');
+  list.innerHTML += '<li class="list-group-item">' + name + '</li>';
+  arrayNombres.push(name);
+  document.getElementById("nombre").innerHTML = arrayNombres
+  console.log(arrayNombres);
+});
