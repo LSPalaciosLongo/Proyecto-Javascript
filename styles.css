@@ -11,7 +11,7 @@ body {
 }
 
 .background {
-    background: rgb(44, 44, 44);
+    background: rgb(0, 0, 0, 0.03);
     border-bottom: 3px double #6a88f8;
     position: fixed;
     top: 0;
@@ -45,4 +45,23 @@ ul li {
 .card{
     width: 460px; 
     margin: 25px auto;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex p {
+    margin-bottom: 0;
+}
+
+.flex .nombre {
+    width: 120px;
+}
+.borrar {
+    color:red;
+    font-size: 12px;
+    cursor: pointer;
 }
