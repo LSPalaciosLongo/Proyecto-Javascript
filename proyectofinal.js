@@ -1,64 +1,97 @@
-const arrayNotas = [];
-var arrayNombresStorage = window.localStorage.getItem("arrayNombres");
-console.log(arrayNombresStorage);
-console.log(typeof(arrayNombresStorage));
-var arrayLocal = [];
-if(arrayNombresStorage != null){
-  var arraySplit = arrayNombresStorage.split(",");
-  arraySplit.forEach(element => {
-    arrayLocal.push(element);  
-  });
+class Alumno {
+  constructor(id, name, apellido, note) {
+    this.id = id;
+    this.name = name;
+    this.apellido = apellido;
+    this.note = note;
+  }
 }
 
-var title = document.getElementById('title');
-var list = document.getElementById('list');
-var li = list.getElementsByTagName('li');
-var addBtn = document.getElementById('add-Btn');
-var borrar = document.getElementsByClassName('borrar');
-console.log(borrar);
-// for (var i = 0; i < li.length; i++) {
-//   list.addEventListener('click', activeItem);
-// }
-// function activeItem() {
-//   title.innerHTML = this.innerText;
-//   for (var i = 0; i < li.length; i++) {
-//     li[i].removeAttribute('class');
-//   }
-//   this.setAttribute('class', 'active');
-// }
-addBtn.addEventListener('click', function() {
-  
-  var name = prompt('Ingrese nombre de alumno');
-  while (isNaN(note = parseInt(prompt("Ingrese nota de alumno"))));
-  // while(true){
-  //   var note = parseInt(prompt('Ingrese nota de alumno'));  
-  //   if (note != NaN) {
-  //     break;
-  //   }
-  //   alert("Nota incorrecta");
-  // }
-  //   if(typeof(note) != int)
-  // }
-  
-  list.innerHTML += '<li class="list-group-item flex"><p class="nombre">' + name + '</p><p class="nota">' + note +' </p><span class="borrar">X</span></li>';
-  arrayLocal.push(name);
-  // window.localStorage.setItem("arrayNombres", "");
-  // document.getElementById("nombre").innerHTML = arrayNombres
-  console.log(arrayNombresStorage);
-  actualizarBorrado();
-});
+const alumnoEnLocalStorage = localStorage.getItem("alumno")||"[]";
+let alumno = JSON.parse(alumnoEnLocalStorage);
+const tableAlumno = document.querySelector("#alumnoTable tbody");
+const alumnoForm = document.querySelector("#addAlumno");
+updateAlumnoTable();
 
-actualizarBorrado();
-function actualizarBorrado() {
-  var borrar = document.querySelectorAll(".borrar");
-  borrar.forEach(function(element) {
-    element.addEventListener("click", function() {
-      //logica de borrar la fila actual
-      element.parentElement.remove();
-      console.log("borrar");
-    });
-  });
+function saveAlumno() {
+  console.log(alumnoForm.idStudent);
+  if (alumnoForm.idStudent && alumnoForm.idStudent != 0) {
+    for (let index = 0; index < alumno.length; index++) {
+      if (alumno[index].id == alumnoForm.idStudent) {
+        alumno[index].name = alumnoForm.alumnoName.value;
+        alumno[index].apellido = alumnoForm.alumnoApellido.value;
+        alumno[index].note = alumnoForm.alumnoNote.value;
+        break;
+      }
+    }
+    alumnoForm["idStudent"] = 0;
+    updateAlumnoTable();
+  } else {
+    //crear
+    const newAlumno = new Alumno(
+      Math.max(0,...alumno.map((alumno)=>alumno.id)) + 1,
+      alumnoForm.alumnoName.value,
+      alumnoForm.alumnoApellido.value,
+      alumnoForm.alumnoNote.value
+    );
+    alumno.push(newAlumno);
+    updateAlumnoTable();
+  }
 }
-// document.querySelectorAll('.borrar').click(
-//   console.log("borrar")
-// );
+
+function updateAlumnoTable() {
+  tableAlumno.innerHTML = "";
+  console.log(alumno);
+  alumno.forEach((student) => {
+    const studentHTML = document.createElement("tr");
+    studentHTML.innerHTML = `<th scope="row">${student.id}</th>
+        <td>${student.name}</td>
+        <td>${student.apellido}</td>
+        <td>${student.note}</td>
+        <td><button
+                id="editBtn_${student.id}"
+                type="button"
+                class="btn btn-primary"
+                onclick="editAlumno(event)"
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >
+                Editar
+                </button>
+            <button
+                id="deleteBtn_${student.id}"
+                type="button"
+                class="btn btn-danger"
+                onclick="deleteAlumno(event)">
+                Borrar
+                </button>
+            </td>
+        `;
+    tableAlumno.appendChild(studentHTML);
+  });
+  agregarEnLocalStorage();
+}
+
+function deleteAlumno(event) {
+  const btn = event.target;
+  const id = btn.id.split("_")[1];
+  alumno = alumno.filter((student) => student.id != id);
+  updateAlumnoTable();
+}
+
+function editAlumno(event) {
+  const btn = event.target;
+  const id = btn.id.split("_")[1];
+  const plato = alumno.filter((student) => student.id == id)[0];
+  alumnoForm.alumnoName.value = plato.name;
+  alumnoForm.alumnoApellido.value = plato.apellido;
+  alumnoForm.alumnoNote.value = plato.note;
+  alumnoForm["idStudent"] = plato.id;
+  console.dir(alumnoForm);
+}
+
+function agregarEnLocalStorage(){
+
+  const alumnoJSON = JSON.stringify(alumno);
+  localStorage.setItem("alumno", alumnoJSON)
+
+}
