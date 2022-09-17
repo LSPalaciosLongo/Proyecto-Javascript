@@ -7,11 +7,14 @@ class Alumno {
   }
 }
 
+// Operador lógico (desafío complementario)
 const alumnoEnLocalStorage = localStorage.getItem("alumno")||"[]";
 let alumno = JSON.parse(alumnoEnLocalStorage);
 const tableAlumno = document.querySelector("#alumnoTable tbody");
 const alumnoForm = document.querySelector("#addAlumno");
 updateAlumnoTable();
+
+
 
 function saveAlumno() {
   console.log(alumnoForm.idStudent);
@@ -26,9 +29,23 @@ function saveAlumno() {
     }
     alumnoForm["idStudent"] = 0;
     updateAlumnoTable();
+    Toastify({
+
+      text: "Se modificó correctamente",
+      
+      duration: 3000,
+
+      position: "center",
+
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      
+      }).showToast();
   } else {
-    //crear
+    //crear 
     const newAlumno = new Alumno(
+      //spread de arrays (desafío complementario)
       Math.max(0,...alumno.map((alumno)=>alumno.id)) + 1,
       alumnoForm.alumnoName.value,
       alumnoForm.alumnoApellido.value,
@@ -36,7 +53,17 @@ function saveAlumno() {
     );
     alumno.push(newAlumno);
     updateAlumnoTable();
+    Toastify({
+
+      text: "Se agregó correctamente",
+
+      position: "center",
+      
+      duration: 3000
+      
+      }).showToast();
   }
+ 
 }
 
 function updateAlumnoTable() {
@@ -72,10 +99,28 @@ function updateAlumnoTable() {
 }
 
 function deleteAlumno(event) {
-  const btn = event.target;
-  const id = btn.id.split("_")[1];
-  alumno = alumno.filter((student) => student.id != id);
-  updateAlumnoTable();
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const btn = event.target;
+      const id = btn.id.split("_")[1];
+      alumno = alumno.filter((student) => student.id != id);
+      updateAlumnoTable();
+      Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    }
+  })
+  
 }
 
 function editAlumno(event) {

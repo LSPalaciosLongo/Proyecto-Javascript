@@ -360,3 +360,55 @@ const NuevoPJParseado = JSON.parse(personajeEnLocalStorage)
       </div>
     </div>
   </div> 
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+class Alumno{constructor(o,l,n,a)
+{this.id=o,this.name=l,this.apellido=n,this.note=a}}
+const alumnoEnLocalStorage=localStorage.getItem("alumno")||"[]";
+let alumno=JSON.parse(alumnoEnLocalStorage);
+const tableAlumno=document.querySelector("#alumnoTable tbody"),alumnoForm=document.querySelector("#addAlumno");
+
+function saveAlumno(){
+    
+if(console.log(alumnoForm.idStudent),
+alumnoForm.idStudent&&0!=alumnoForm.idStudent)
+{for(let o=0;o<alumno.length;o++)if(alumno[o].id==alumnoForm.idStudent)
+{alumno[o].name=alumnoForm.alumnoName.value,alumno[o].apellido=alumnoForm.alumnoApellido.value,alumno[o].note=alumnoForm.alumnoNote.value;
+break}alumnoForm.idStudent=0,updateAlumnoTable()}
+else{let l=new Alumno(Math.max(0,...alumno.map(o=>o.id))+1,alumnoForm.alumnoName.value,alumnoForm.alumnoApellido.value,alumnoForm.alumnoNote.value);
+alumno.push(l),updateAlumnoTable()}}
+
+function updateAlumnoTable()
+{tableAlumno.innerHTML="",console.log(alumno),alumno.forEach(o=>{let l=document.createElement("tr");l.innerHTML=`<th scope="row">${o.id}</th>
+        <td>${o.name}</td>
+        <td>${o.apellido}</td>
+        <td>${o.note}</td>
+        <td><button
+                id="editBtn_${o.id}"
+                type="button"
+                class="btn btn-primary"
+                onclick="editAlumno(event)"
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >
+                Editar
+                </button>
+            <button
+                id="deleteBtn_${o.id}"
+                type="button"
+                class="btn btn-danger"
+                onclick="deleteAlumno(event)">
+                Borrar
+                </button>
+            </td>
+        `,tableAlumno.appendChild(l)}),
+agregarEnLocalStorage()}
+function deleteAlumno(o){let l=o.target,n=l.id.split("_")[1];
+alumno=alumno.filter(o=>o.id!=n),updateAlumnoTable()}
+function editAlumno(o){let l=o.target,n=l.id.split("_")[1],a=alumno.filter(o=>o.id==n)[0];
+alumnoForm.alumnoName.value=a.name,alumnoForm.alumnoApellido.value=a.apellido,alumnoForm.alumnoNote.value=a.note,alumnoForm.idStudent=a.id,console.dir(alumnoForm)}
+function agregarEnLocalStorage(){let o=JSON.stringify(alumno);localStorage.setItem("alumno",o)}
+updateAlumnoTable();
