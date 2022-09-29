@@ -7,7 +7,6 @@ class Alumno {
   }
 }
 
-// Operador lógico (desafío complementario)
 const alumnoEnLocalStorage = localStorage.getItem("alumno")||"[]";
 let alumno = JSON.parse(alumnoEnLocalStorage);
 const tableAlumno = document.querySelector("#alumnoTable tbody");
@@ -45,7 +44,6 @@ function saveAlumno() {
   } else {
     //crear 
     const newAlumno = new Alumno(
-      //spread de arrays (desafío complementario)
       Math.max(0,...alumno.map((alumno)=>alumno.id)) + 1,
       alumnoForm.alumnoName.value,
       alumnoForm.alumnoApellido.value,
@@ -140,3 +138,27 @@ function agregarEnLocalStorage(){
   localStorage.setItem("alumno", alumnoJSON)
 
 }
+
+let pais;
+let nomUni;
+
+const data = fetch('./world_universities_and_domains.json')
+  .then(response => response.json())
+  .then(data => {
+      const random = data[Math.floor(Math.random() * data.length)]
+      pais = random["country"];
+      nomUni = random["name"];
+      console.log(nomUni, pais);
+      return pais, nomUni
+   })
+   ;
+
+
+const azarUni = document.getElementById("azarUni");
+const azarUni2 = document.getElementById("azarUni2");
+
+azarUni.innerHTML = "";
+azarUni2.innerHTML = "";
+
+azarUni.innerHTML = pais;
+azarUni2.innerHTML = nomUni;
