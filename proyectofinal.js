@@ -139,26 +139,53 @@ function agregarEnLocalStorage(){
 
 }
 
-let pais;
-let nomUni;
+//let pais;
+//let nomUni;
 
-const data = fetch('./world_universities_and_domains.json')
-  .then(response => response.json())
-  .then(data => {
-      const random = data[Math.floor(Math.random() * data.length)]
-      pais = random["country"];
-      nomUni = random["name"];
-      console.log(nomUni, pais);
-      return pais, nomUni
-   })
-   ;
+  // const data = fetch('./world_universities_and_domains.json')
+  // .then(response => response.json())
+  // .then(data => {
+  //     const random = data[Math.floor(Math.random() * data.length)]
+  //     pais = random["country"];
+  //     nomUni = random["name"];
+  //     console.log(nomUni, pais);
+  //     return pais, nomUni
+  //  })
+  //  ;
+async function consultarDB(){
+  const data = await fetch('./world_universities_and_domains.json')
+  //let datos = await data.json()
+   .then(response => response.json())
+   .then(data => {
+       const random = data[Math.floor(Math.random() * data.length)]
+       pais = random["country"];
+       nomUni = random["name"];
+       console.log(nomUni, pais);
+       return pais, nomUni
+    })
+    ;
+    const azarUni = document.getElementById("azarUni");
+    const azarUni2 = document.getElementById("azarUni2");
 
+    azarUni.innerHTML = "";
+    azarUni2.innerHTML = "";
 
-const azarUni = document.getElementById("azarUni");
-const azarUni2 = document.getElementById("azarUni2");
+    azarUni.innerHTML = pais;
+    azarUni2.innerHTML = nomUni + " //";
+}
+   
+ function cargarDB(){
+  consultarDB();
+ }
+  
+cargarDB();
 
-azarUni.innerHTML = "";
-azarUni2.innerHTML = "";
+console.log(pais, nomUni)
+// const azarUni = document.getElementById("azarUni");
+// const azarUni2 = document.getElementById("azarUni2");
 
-azarUni.innerHTML = pais;
-azarUni2.innerHTML = nomUni;
+// azarUni.innerHTML = "";
+// azarUni2.innerHTML = "";
+
+// azarUni.innerHTML = pais;
+// azarUni2.innerHTML = nomUni;
