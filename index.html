@@ -19,7 +19,7 @@
 
 
 
-    <!-- <form id="login">
+    <!--<form id="login">
       <div class="field">
         <label for="username"> Username </label>
         <input type="text" placeholder="Username" name="username" />
@@ -31,7 +31,7 @@
       <div class="field">
         <button type="submit" onclick="login(event)">Login</button>
       </div>
-    </form> -->
+    </form>-->
 
     <div class="h1">
       <h1>Proyecto Final: Administrador de alumnos</h1>
@@ -74,11 +74,23 @@
                 <form id="addAlumno">
                   <div class="field">
                     <label for="alumnoName" class="titulo"> Nombre</label>
-                    <input type="text" class="inputAlumnos" placeholder="Nombre" name="alumnoName" />
+                    <input 
+                    type="text" 
+                    class="inputAlumnos" 
+                    placeholder="Nombre" 
+                    name="alumnoName"
+                    required 
+                    />
                   </div>
                   <div class="field">
                     <label for="alumnoApellido" class="titulo"> Apellido </label>
-                    <input type="text" class="inputAlumnos" placeholder="Apellido" name="alumnoApellido" />
+                    <input 
+                    type="text" 
+                    class="inputAlumnos" 
+                    placeholder="Apellido" 
+                    name="alumnoApellido"
+                    required 
+                    />
                   </div>
                   <div class="field">
                     <label for="alumnoNote" class="titulo"> Nota (del 1 al 10) </label>
@@ -89,6 +101,7 @@
                       name="alumnoNote"
                       min="1"
                       max="10"
+                      required
                     />
                   </div>
                 </form>
@@ -129,10 +142,15 @@
         </table>
       </h2>
     </div>
+    <div class="containerDiv">
+      <div class="promedioDiv">
+        <h4 class="promedioText" id="promedio"></h4>
+      </div>
+    </div>
     <footer class="footer1">
       <div class="randomUniversity">
-        <h4 class="randomUniversityText" id="azarUni2"></h4>
-        <h4 class="randomUniversityText" id="azarUni"></h4>
+        <h5 class="randomUniversityText" id="azarUni2"></h5>
+        <h5 class="randomUniversityText" id="azarUni"></h5>
       </div>
     </footer>
     <script
